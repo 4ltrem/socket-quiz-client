@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import ClientComponent from "./ClientComponent";
 
 function App() {
+  const [loadClient, setLoadClient] = useState(true);
+  const [isMultiplayer, setMultiplayer] = useState(null);
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      
+      {/* LOAD OR UNLOAD THE CLIENT */}
+      <button onClick={() => setLoadClient(prevState => !prevState)}>
+        {loadClient ? "Disconnect" : "Connect"}
+      </button>
+      
+      {/* SOCKET IO CLIENT*/}
+      {loadClient ? <ClientComponent /> : null}
+
+      <h1>Current Game Mode :  {isMultiplayer == null ? "None selected." :  isMultiplayer ? "Multiplayer" : "Singleplayer"}</h1>
+
+      <button onClick={() => setMultiplayer(false)}>
+        Singleplayer
+      </button>
+
+      <button onClick={() => setMultiplayer(true)}>
+        Multiplayer
+      </button>
+    </>
   );
 }
 
